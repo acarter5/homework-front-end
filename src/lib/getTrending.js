@@ -10,3 +10,5 @@ const getTrending = (whenGifs) => {
   .then((data) => whenGifs(data))
   .catch((err) => console.error(err));
 };
+
+module.exports = getTrending;
