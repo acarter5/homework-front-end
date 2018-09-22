@@ -19,6 +19,7 @@ class App extends Component {
     
     this.loadTrending = this.loadTrending.bind(this);
     this.loadSearched = this.loadSearched.bind(this);
+    this.handleGiphClick = this.handleGiphClick.bind(this);
   }
   
   componentDidMount() {
@@ -37,11 +38,33 @@ class App extends Component {
     });
   }
 
+  handleGiphClick(giph) {
+    this.setState({selectedGiph: giph}, () => {
+      this.setState({showModal: true});
+    });
+  }
+
   render() {
+
+    let modal = null;
+    if (this.state.showModal === true) {
+      modal = (
+        <Modal>
+          <div className="modal-dark-black">
+            <p>HELLO</p>
+          </div>
+        </Modal>
+      );
+    } else {
+      modal = null;
+    }
+
+
     return (
       <div className='app'>
         <Search handleSearch={this.loadSearched}/>
-        <List giphs={this.state.giphs}/>
+        <List giphs={this.state.giphs} handleGiphClick={this.handleGiphClick}/>
+        {modal}
       </div>
     );
   }

@@ -7,7 +7,7 @@ var List = (props) => (
 
   <div className='list'>
     {props.giphs.map(giph =>
-      <GiphEntry giph={giph} key={giph.id}/>
+      <GiphEntry giph={giph} key={giph.id} handleGiphClick={props.handleGiphClick}/>
     )}
   </div>
 );

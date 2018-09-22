@@ -2,7 +2,7 @@ import React from 'react';
 import './GiphEntry.css';
 
 var GiphEntry = (props) => (
-  <div className='giph-entry'>
+  <div className='giph-entry' onClick={() => props.handleGiphClick(props.giph)}>
     <img src={props.giph.images.fixed_width.url}/>
   </div>
 );
