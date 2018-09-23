@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 import List from './List.js';
@@ -15,23 +16,37 @@ class App extends Component {
     this.state = {
       giphs: [],
       showModal: false,
-      selectedGiph: {}
+      selectedGiph: {},
+      favories: [],
     };
     
     this.loadTrending = this.loadTrending.bind(this);
     this.loadSearched = this.loadSearched.bind(this);
     this.handleGiphClick = this.handleGiphClick.bind(this);
     this.exit = this.exit.bind(this);
+    this.loadFavorites = this.loadFavorites.bind(this);
   }
   
   componentDidMount() {
     this.loadTrending();
+    this.loadFavorites();
   }
 
   loadTrending() {
     getTrending((data) => {
       this.setState({giphs: data.data.data});
     });
+  }
+
+  loadFavorites() {
+    const self = this;
+    axios.get('http://localhost:8080/favorites')
+      .then((data) => {
+        self.setState({favorites: JSON.parse(data.data[0].giphs)});
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   loadSearched(q) {
