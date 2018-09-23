@@ -1,0 +1,14 @@
+.xbutton-container {
+  background-color: #fff;
+  border: 2px solid black;
+  border-radius: 4px;
+  height: 30px;
+  width: 30px;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+}
+
+.xbutton {
+  width: 100%;
+}
