@@ -17,7 +17,8 @@ class App extends Component {
       giphs: [],
       showModal: false,
       selectedGiph: {},
-      favories: [],
+      favorites: [],
+      type: 'trending',
     };
     
     this.loadTrending = this.loadTrending.bind(this);
@@ -25,6 +26,8 @@ class App extends Component {
     this.handleGiphClick = this.handleGiphClick.bind(this);
     this.exit = this.exit.bind(this);
     this.loadFavorites = this.loadFavorites.bind(this);
+    this.handleFavorite = this.handleFavorite.bind(this);
+    this.favoritePersist = this.favoritePersist.bind(this);
   }
   
   componentDidMount() {
@@ -49,9 +52,18 @@ class App extends Component {
       });
   }
 
+  favoritePersist() {
+    const self = this;
+    axios.put('http://localhost:8080/favorites', {
+      favorites: JSON.stringify(self.state.favorites)
+    })
+      .then((response) => { console.log(response); })
+      .catch((err) => { console.error(err); });
+  }
+
   loadSearched(q) {
     searchGiphy(q, (data)=> {
-      this.setState({giphs: data.data.data});
+      this.setState({giphs: data.data.data, type: 'search'});
     });
   }
 
@@ -59,6 +71,18 @@ class App extends Component {
     this.setState({selectedGiph: giph}, () => {
       this.setState({showModal: true});
     });
+  }
+
+  handleFavorite(favorites, giph) {
+    let giphIndex;
+    if (favorites.includes(giph)) {
+      giphIndex = favorites.indexOf(giph);
+      favorites.splice(giphIndex, 1);
+    } else {
+      favorites.push(giph);
+    }
+
+    this.setState({favorites: favorites}, this.favoritePersist);
   }
 
   exit() {
@@ -72,7 +96,7 @@ class App extends Component {
       modal = (
         <Modal>
           <div className="modal-dark-black">
-            <ModalContent giph={this.state.selectedGiph} exit={this.exit}/>
+            <ModalContent giph={this.state.selectedGiph} favorites={this.state.favorites} exit={this.exit} handleFavorite={this.handleFavorite}/>
           </div>
         </Modal>
       );
@@ -84,7 +108,8 @@ class App extends Component {
     return (
       <div className='app'>
         <Search handleSearch={this.loadSearched}/>
-        <List giphs={this.state.giphs} handleGiphClick={this.handleGiphClick}/>
+        <List giphs={this.state.giphs} handleGiphClick={this.handleGiphClick} type={this.state.type}/>
+        <List giphs={this.state.favorites} handleGiphClick={this.handleGiphClick} type='favorites'/>
         {modal}
       </div>
     );

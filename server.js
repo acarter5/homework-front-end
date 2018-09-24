@@ -4,6 +4,8 @@ const path = require('path');
 const db = require('./database/operations.js');
 const app = express();
 
+app.use(bodyParser.json());
+
 app.use(function (req, res, next) {    
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
@@ -23,10 +25,22 @@ app.get('/ping', function (req, res) {
 });
 
 app.get('/favorites', function (req, res) {
-
   db.getFavorites((err, data) => {
     try {
       res.status(200).send(data);
+    } catch (err) {
+      res.staus(404).send(err);
+    }  
+  });
+});
+
+
+app.put('/favorites', function(req, res) {
+  let favorites = req.body.favorites;
+
+  db.updateFavorites(favorites, (err) => {
+    try {
+      res.status(200).send('update complete');
     } catch (err) {
       res.staus(404).send(err);
     }  

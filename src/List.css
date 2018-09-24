@@ -1,3 +1,10 @@
+.list-container {
+  border: 1px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 5px; 
+}
+
 .list {
   display: flex;
   flex-direction: row;
