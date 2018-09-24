@@ -5,6 +5,7 @@ import './App.css';
 import List from './List.js';
 import Search from './Search.js';
 import Modal from './Modal.js';
+import ModalContent from './ModalContent.js';
 import getTrending from './lib/getTrending.js';
 import searchGiphy from './lib/searchGiphy.js';
 
@@ -22,6 +23,7 @@ class App extends Component {
     this.loadTrending = this.loadTrending.bind(this);
     this.loadSearched = this.loadSearched.bind(this);
     this.handleGiphClick = this.handleGiphClick.bind(this);
+    this.exit = this.exit.bind(this);
     this.loadFavorites = this.loadFavorites.bind(this);
   }
   
@@ -59,6 +61,10 @@ class App extends Component {
     });
   }
 
+  exit() {
+    this.setState({showModal: false});
+  }
+
   render() {
 
     let modal = null;
@@ -66,7 +72,7 @@ class App extends Component {
       modal = (
         <Modal>
           <div className="modal-dark-black">
-            <p>HELLO</p>
+            <ModalContent giph={this.state.selectedGiph} exit={this.exit}/>
           </div>
         </Modal>
       );
