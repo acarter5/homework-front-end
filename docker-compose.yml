@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  database:
+    build: database/
+    ports:
+        - 3306:3306
+    environment:
+        MYSQL_DATABASE: eaze
+        MYSQL_USER: root
+        MYSQL_ROOT_PASSWORD: mysqlpwd
+
+  giph-service:
+    build: giph-service/
+    depends_on:
+      - 'database'
+    links:
+      - 'database'
+    restart: on-failure
+    ports: 
+      - '3000:8080'

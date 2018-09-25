@@ -43,7 +43,7 @@ class App extends Component {
 
   loadFavorites() {
     const self = this;
-    axios.get('http://localhost:8080/favorites')
+    axios.get('/favorites')
       .then((data) => {
         self.setState({favorites: JSON.parse(data.data[0].giphs)});
       })
@@ -54,7 +54,7 @@ class App extends Component {
 
   favoritePersist() {
     const self = this;
-    axios.put('http://localhost:8080/favorites', {
+    axios.put('/favorites', {
       favorites: JSON.stringify(self.state.favorites)
     })
       .then((response) => { console.log(response); })

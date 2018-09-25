@@ -20,6 +20,7 @@ app.use(function (req, res, next) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
+
 app.get('/favorites', function (req, res) {
   db.getFavorites((err, data) => {
     try {

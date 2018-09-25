@@ -9,6 +9,8 @@ const getFavorites = (whenData) => {
 const updateFavorites = (favorites, whenUpdated) => {
   const qs = 'UPDATE favorites SET giphs=' + JSON.stringify(favorites) + ' WHERE user_id =1';
 
+  console.log('query string', qs);
+
   db.query(qs, whenUpdated);
 };
 

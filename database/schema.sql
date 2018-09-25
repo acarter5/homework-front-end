@@ -12,3 +12,6 @@ CREATE TABLE favorites (
 
 INSERT INTO favorites (giphs) VALUEs ("[]");
 
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
